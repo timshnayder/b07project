@@ -7,44 +7,45 @@
     tools:context=".HomeFragment">
 
     <Button
-        android:id="@+id/buttonRecyclerView"
+        android:id="@+id/buttonBrowseArtifacts"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/recyclerview"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="Browse Artifacts"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSavedArtifacts"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/buttonScroller"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonScroller"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/scroller"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRecyclerView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSpinner"/>
-
-    <Button
-        android:id="@+id/buttonSpinner"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/spinner"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/buttonSavedArtifacts"
+        android:layout_width="405dp"
+        android:layout_height="40dp"
+        android:text="Saved Artifacts"
+        app:layout_constraintBottom_toTopOf="@+id/buttonAddArtifact"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonScroller" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonBrowseArtifacts" />
 
     <Button
-        android:id="@+id/buttonManageItems"
+        android:id="@+id/buttonAddArtifact"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/manage_items"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSpinner"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="Add New Artifact"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSavedArtifacts" />
+
+    <Button
+        android:id="@+id/buttonLogout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Log Out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAddArtifact" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
