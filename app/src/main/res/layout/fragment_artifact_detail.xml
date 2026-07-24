@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="#FAFAFA">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/imageViewDetailArtifact"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:background="#FFFFFF"
+            tools:srcCompat="@tools:sample/backgrounds/scenic"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewDetailName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Artifact Name"
+            android:textColor="#212121"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewDetailArtifact"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:background="#E0E0E0"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDetailName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Lot Number -->
+        <TextView
+            android:id="@+id/textViewLotLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Lot Number:"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/divider"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewDetailLotNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="N/A"
+            android:textColor="#212121"
+            android:textSize="14sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textViewLotLabel"
+            app:layout_constraintStart_toEndOf="@+id/textViewLotLabel"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Category -->
+        <TextView
+            android:id="@+id/textViewCategoryLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Category:"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/textViewLotLabel"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewDetailCategory"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="N/A"
+            android:textColor="#212121"
+            android:textSize="14sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textViewCategoryLabel"
+            app:layout_constraintStart_toEndOf="@+id/textViewCategoryLabel"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Dynasty / Period -->
+        <TextView
+            android:id="@+id/textViewDynastyLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Dynasty / Period:"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCategoryLabel"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewDetailDynastyPeriod"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="N/A"
+            android:textColor="#212121"
+            android:textSize="14sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textViewDynastyLabel"
+            app:layout_constraintStart_toEndOf="@+id/textViewDynastyLabel"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Material -->
+        <TextView
+            android:id="@+id/textViewMaterialLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Material:"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDetailDynastyPeriod"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewDetailMaterial"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="N/A"
+            android:textColor="#212121"
+            android:textSize="14sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textViewMaterialLabel"
+            app:layout_constraintStart_toEndOf="@+id/textViewMaterialLabel"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Cultural -->
+        <TextView
+            android:id="@+id/textViewCulturalOriginLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Cultural Origin:"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/textViewMaterialLabel"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewDetailCulturalOrigin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="N/A"
+            android:textColor="#212121"
+            android:textSize="14sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textViewCulturalOriginLabel"
+            app:layout_constraintStart_toEndOf="@+id/textViewCulturalOriginLabel"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Dimensions -->
+        <TextView
+            android:id="@+id/textViewDimensionsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Dimensions:"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCulturalOriginLabel"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewDetailDimensions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="N/A"
+            android:textColor="#212121"
+            android:textSize="14sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textViewDimensionsLabel"
+            app:layout_constraintStart_toEndOf="@+id/textViewDimensionsLabel"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Condition Report -->
+        <TextView
+            android:id="@+id/textViewConditionReportLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Condition Report:"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDimensionsLabel"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewDetailConditionReport"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="N/A"
+            android:textColor="#212121"
+            android:textSize="14sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textViewConditionReportLabel"
+            app:layout_constraintStart_toEndOf="@+id/textViewConditionReportLabel"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Current Location -->
+        <TextView
+            android:id="@+id/textViewCurrentLocationLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Current Location:"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/textViewConditionReportLabel"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewDetailCurrentLocation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="N/A"
+            android:textColor="#212121"
+            android:textSize="14sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textViewCurrentLocationLabel"
+            app:layout_constraintStart_toEndOf="@+id/textViewCurrentLocationLabel"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Acquisition Method -->
+        <TextView
+            android:id="@+id/textViewAcquisitionMethodLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Acquisition Method:"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCurrentLocationLabel"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewDetailAcquisitionMethod"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="N/A"
+            android:textColor="#212121"
+            android:textSize="14sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textViewAcquisitionMethodLabel"
+            app:layout_constraintStart_toEndOf="@+id/textViewAcquisitionMethodLabel"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Provenance -->
+        <TextView
+            android:id="@+id/textViewProvenanceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Provenance:"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAcquisitionMethodLabel"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewDetailProvenance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="N/A"
+            android:textColor="#212121"
+            android:textSize="14sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textViewProvenanceLabel"
+            app:layout_constraintStart_toEndOf="@+id/textViewProvenanceLabel"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Accession Number -->
+        <TextView
+            android:id="@+id/textViewAccessionNumberLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Accession Number:"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/textViewProvenanceLabel"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewDetailAccessionNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="N/A"
+            android:textColor="#212121"
+            android:textSize="14sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textViewAccessionNumberLabel"
+            app:layout_constraintStart_toEndOf="@+id/textViewAccessionNumberLabel"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Notes -->
+        <TextView
+            android:id="@+id/textViewNotesLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Notes:"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAccessionNumberLabel"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewDetailNotes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="N/A"
+            android:textColor="#212121"
+            android:textSize="14sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textViewNotesLabel"
+            app:layout_constraintStart_toEndOf="@+id/textViewNotesLabel"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="#E0E0E0"
+            app:layout_constraintTop_toBottomOf="@+id/textViewNotesLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Description -->
+        <TextView
+            android:id="@+id/textViewDescriptionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Description:"
+            android:textColor="#757575"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/divider2"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewDetailDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Description of the artifact"
+            android:textColor="#424242"
+            android:textSize="15sp"
+            android:lineSpacingMultiplier="1.2"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDescriptionLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/buttonDetailBack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="16dp"
+            android:text="Back to List"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDetailDescription"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
