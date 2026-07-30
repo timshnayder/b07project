@@ -17,6 +17,7 @@ public class ManageItemsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_manage_items, container, false);
 
         Button buttonAddItem = view.findViewById(R.id.buttonAddItem);
+        Button buttonEditItem = view.findViewById(R.id.buttonEditItem);
         Button buttonDeleteItem = view.findViewById(R.id.buttonDeleteItem);
         Button buttonBack = view.findViewById(R.id.buttonBack);
 
@@ -26,6 +27,8 @@ public class ManageItemsFragment extends Fragment {
                 loadFragment(new AddItemFragment());
             }
         });
+
+        buttonEditItem.setOnClickListener(v -> loadFragment(new EditItemFragment()));
 
         buttonDeleteItem.setOnClickListener(v -> loadFragment(new DeleteItemFragment()));
 
