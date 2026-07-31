@@ -18,8 +18,9 @@ public class HomeFragment extends Fragment {
 
         Button buttonBrowseArtifacts = view.findViewById(R.id.buttonBrowseArtifacts);
         Button buttonScroller = view.findViewById(R.id.buttonSavedArtifacts);
+        Button buttonManageArtifacts = view.findViewById(R.id.buttonManageArtifacts);
         Button buttonAddArtifact = view.findViewById(R.id.buttonAddArtifact);
-        Button buttonManageItems = view.findViewById(R.id.buttonLogout);
+        Button buttonLogout = view.findViewById(R.id.buttonLogout);
 
         buttonBrowseArtifacts.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,6 +36,13 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        buttonManageArtifacts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new ManageArtifactsFragment());
+            }
+        });
+
         buttonAddArtifact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,7 +50,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        buttonManageItems.setOnClickListener(new View.OnClickListener() {
+        buttonLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { }
         });

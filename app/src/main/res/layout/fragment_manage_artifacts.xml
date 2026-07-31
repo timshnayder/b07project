@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ManageArtifactsFragment">
+
+    <Button
+        android:id="@+id/buttonAddArtifact"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Add Artifact"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/buttonEditArtifact"/>
+
+    <Button
+        android:id="@+id/buttonEditArtifact"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Edit Artifact"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAddArtifact"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/buttonDeleteArtifact" />
+
+    <Button
+        android:id="@+id/buttonDeleteArtifact"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Delete Artifact"
+        app:layout_constraintTop_toBottomOf="@+id/buttonEditArtifact"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/buttonBack"/>
+
+    <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/back"
+        app:layout_constraintTop_toBottomOf="@+id/buttonDeleteArtifact"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
