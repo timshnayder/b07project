@@ -76,6 +76,8 @@ public class SignupFragment extends Fragment implements SignupContract.View {
                 Toast.LENGTH_SHORT
         ).show();
 
+        getParentFragmentManager().popBackStack(null, androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
         FragmentTransaction transaction =
                 getParentFragmentManager().beginTransaction();
 

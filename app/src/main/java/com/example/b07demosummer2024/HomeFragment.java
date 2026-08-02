@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeFragment extends Fragment {
     @Nullable
@@ -44,7 +45,13 @@ public class HomeFragment extends Fragment {
 
         buttonManageItems.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { }
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                getParentFragmentManager().popBackStack(null, androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, new LoginFragment());
+                transaction.commit();
+            }
         });
 
         return view;

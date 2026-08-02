@@ -68,6 +68,8 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     public void showLoginSuccess() {
         Toast.makeText(requireContext(), "Login successful", Toast.LENGTH_SHORT).show();
 
+        getParentFragmentManager().popBackStack(null, androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
         FragmentTransaction transaction =
                 getParentFragmentManager().beginTransaction();
 
