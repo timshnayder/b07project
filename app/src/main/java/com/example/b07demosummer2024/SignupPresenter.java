@@ -40,6 +40,7 @@ public class SignupPresenter implements SignupContract.Presenter {
 
         model.signup(
                 trimmedEmail,
+                trimmedUsername,
                 trimmedPassword,
                 new LoginContract.LoginCallback() {
                     @Override

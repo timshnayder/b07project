@@ -24,6 +24,7 @@ public interface SignupContract {
 
     interface Model {
         void signup(String email,
+                    String username,
                     String password,
                     LoginContract.LoginCallback callback);
     }
