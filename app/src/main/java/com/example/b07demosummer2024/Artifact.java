@@ -1,5 +1,7 @@
 package com.example.b07demosummer2024;
 
+import java.util.Map;
+
 public class Artifact implements java.io.Serializable {
     private String lotNumber;
     private String name;
@@ -16,6 +18,8 @@ public class Artifact implements java.io.Serializable {
     private String provenance;
     private String accessionNumber;
     private String notes;
+    private long likeCount;
+    private Map<String, Boolean> likedBy;
 
     public Artifact(){}
 
@@ -65,6 +69,12 @@ public class Artifact implements java.io.Serializable {
     public String getNotes() {
         return notes;
     }
+    public long getLikeCount() {
+        return likeCount;
+    }
+    public Map<String, Boolean> getLikedBy() {
+        return likedBy;
+    }
 
     //setters
     public void setLotNumber(String lotNumber) {
@@ -111,5 +121,11 @@ public class Artifact implements java.io.Serializable {
     }
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+    public void setLikeCount(long likeCount) {
+        this.likeCount = likeCount;
+    }
+    public void setLikedBy(Map<String, Boolean> likedBy) {
+        this.likedBy = likedBy;
     }
 }
