@@ -24,7 +24,7 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_home_fragment, container, false);
 
         Button buttonBrowseArtifacts = view.findViewById(R.id.buttonBrowseArtifacts);
-        Button buttonScroller = view.findViewById(R.id.buttonSavedArtifacts);
+        Button buttonSavedArtifacts = view.findViewById(R.id.buttonSavedArtifacts);
         Button buttonManageArtifacts = view.findViewById(R.id.buttonManageArtifacts);
         Button buttonAddArtifact = view.findViewById(R.id.buttonAddArtifact);
         Button buttonLogout = view.findViewById(R.id.buttonLogout);
@@ -67,10 +67,10 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        buttonScroller.setOnClickListener(new View.OnClickListener() {
+        buttonSavedArtifacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                loadFragment(new ScrollerFragment());
+                loadFragment(new SavedArtifactsFragment());
             }
         });
 
