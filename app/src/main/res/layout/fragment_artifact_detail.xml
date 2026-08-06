@@ -62,6 +62,18 @@
             app:layout_constraintBottom_toBottomOf="@+id/buttonLike"
             app:layout_constraintStart_toEndOf="@+id/buttonLike" />
 
+        <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save Artifact"
+            android:textSize="14sp"
+            android:padding="8dp"
+            android:backgroundTint="#999999"
+            app:layout_constraintTop_toTopOf="@+id/buttonLike"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonLike"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <View
             android:id="@+id/divider"
             android:layout_width="0dp"

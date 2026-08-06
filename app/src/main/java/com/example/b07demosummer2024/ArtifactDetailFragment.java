@@ -30,7 +30,9 @@ import java.util.List;
 public class ArtifactDetailFragment extends Fragment {
     private Artifact artifact;
     private Button buttonLike;
+    private Button buttonSave;
     private TextView textViewLikeCount;
+    private boolean userHasSaved = false;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference artifactsRef;
     private String currentUserId;
@@ -91,6 +93,7 @@ public class ArtifactDetailFragment extends Fragment {
         TextView textViewDescription = view.findViewById(R.id.textViewDetailDescription);
         Button buttonBack = view.findViewById(R.id.buttonDetailBack);
         buttonLike = view.findViewById(R.id.buttonLike);
+        buttonSave = view.findViewById(R.id.buttonSave);
         textViewLikeCount = view.findViewById(R.id.textViewLikeCount);
         editTextCommentInput = view.findViewById(R.id.editTextCommentInput);
         buttonPostComment = view.findViewById(R.id.buttonPostComment);
@@ -123,6 +126,8 @@ public class ArtifactDetailFragment extends Fragment {
             artifactId = artifact.getLotNumber();
             loadLikeData();
             setupLikeButton();
+            loadSaveData();
+            setupSaveButton();
             checkUserAdminRole();
             loadCommentsData();
             setupCommentButton();
@@ -221,6 +226,97 @@ public class ArtifactDetailFragment extends Fragment {
         } else {
             buttonLike.setText("🤍 Like");
             buttonLike.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
+                    android.graphics.Color.parseColor("#999999")));
+        }
+    }
+
+    private void loadSaveData() {
+        if (artifactId == null || currentUserId == null) return;
+
+        DatabaseReference userSavedRef = FirebaseDatabase.getInstance()            
+            .getReference("users")
+            .child(currentUserId)
+            .child("saved")
+            .child(artifactId);
+
+        userSavedRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userHasSaved = dataSnapshot.exists();
+                updateSaveButton();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                if (getContext() != null) {
+                    Toast.makeText(getContext(), "Error loading saved status", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void setupSaveButton() {
+        if (buttonSave == null) return;
+
+        if (currentUserId == null) {
+            buttonSave.setEnabled(false);
+            buttonSave.setText("Login to save");
+            return;
+        }
+
+        buttonSave.setOnClickListener(v -> toggleSave());
+    }
+
+    private void toggleSave() {
+        if (artifactId == null || currentUserId == null || artifact == null) return;
+
+        DatabaseReference userSavedRef = FirebaseDatabase.getInstance()
+            .getReference("users")
+            .child(currentUserId)
+            .child("saved")
+            .child(artifactId);
+
+        if (userHasSaved) {
+            userSavedRef.removeValue().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    userHasSaved = false;
+                    updateSaveButton();
+                    if (getContext() != null) {
+                        Toast.makeText(getContext(), "Removed from saved artifacts", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    if (getContext() != null) {
+                        Toast.makeText(getContext(), "Failed to unsave artifact", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        } else {
+            userSavedRef.setValue(true).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    userHasSaved = true;
+                    updateSaveButton();
+                    if (getContext() != null) {
+                        Toast.makeText(getContext(), "Saved to artifacts", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    if (getContext() != null) {
+                        Toast.makeText(getContext(), "Failed to save artifact", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+    }
+
+    private void updateSaveButton() {
+        if (buttonSave == null) return;
+
+        if (userHasSaved) {
+            buttonSave.setText("Saved");
+            buttonSave.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
+                    android.graphics.Color.parseColor("#1565C0")));
+        } else {
+            buttonSave.setText("Save Artifact");
+            buttonSave.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
                     android.graphics.Color.parseColor("#999999")));
         }
     }
