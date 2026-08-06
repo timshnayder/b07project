@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AlertDialog;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,7 +39,21 @@ public class DeleteArtifactFragment extends Fragment {
         db = FirebaseDatabase.getInstance("https://b07project-97f73-default-rtdb.firebaseio.com/");
         artifactsRef = db.getReference("artifacts");
 
-        buttonDelete.setOnClickListener(v -> deleteByLotNumber());
+        buttonDelete.setOnClickListener(v -> {
+            String lotNumber = editTextLotNumber.getText().toString().trim();
+
+            if (lotNumber.isEmpty()) {
+                editTextLotNumber.setError("Lot Number is required");
+                return;
+            }
+
+            new AlertDialog.Builder(requireContext())
+                    .setTitle("Delete Artifact")
+                    .setMessage("Are you sure you want to delete artifact " + lotNumber + "?")
+                    .setPositiveButton("Delete", (dialog, which) -> deleteByLotNumber())
+                    .setNegativeButton("Cancel", null)
+                    .show();
+        });
         buttonBack.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
         return view;
