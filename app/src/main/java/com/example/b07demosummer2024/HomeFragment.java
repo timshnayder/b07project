@@ -10,6 +10,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class HomeFragment extends Fragment {
     @Nullable
@@ -22,6 +28,37 @@ public class HomeFragment extends Fragment {
         Button buttonManageArtifacts = view.findViewById(R.id.buttonManageArtifacts);
         Button buttonAddArtifact = view.findViewById(R.id.buttonAddArtifact);
         Button buttonLogout = view.findViewById(R.id.buttonLogout);
+        buttonManageArtifacts.setVisibility(View.GONE);
+        buttonAddArtifact.setVisibility(View.GONE);
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (currentUser != null) {
+            DatabaseReference roleRef = FirebaseDatabase
+                    .getInstance("https://b07project-97f73-default-rtdb.firebaseio.com/")
+                    .getReference("users")
+                    .child(currentUser.getUid())
+                    .child("role");
+
+            roleRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String role = snapshot.getValue(String.class);
+
+                    if ("admin".equals(role)) {
+                        buttonManageArtifacts.setVisibility(View.VISIBLE);
+                        buttonAddArtifact.setVisibility(View.VISIBLE);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // Keep admin buttons hidden if the role cannot be loaded.
+                    buttonManageArtifacts.setVisibility(View.GONE);
+                    buttonAddArtifact.setVisibility(View.GONE);
+                }
+            });
+        }
 
         buttonBrowseArtifacts.setOnClickListener(new View.OnClickListener() {
             @Override
