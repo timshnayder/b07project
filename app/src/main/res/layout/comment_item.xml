@@ -30,6 +30,17 @@
             android:text="Aug 04, 2026"
             android:textColor="#999999"
             android:textSize="12sp" />
+
+        <ImageButton
+            android:id="@+id/buttonDeleteComment"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="12dp"
+            android:src="@android:drawable/ic_menu_delete"
+            android:contentDescription="Delete comment"
+            android:background="?attr/selectableItemBackground"
+            android:scaleType="centerInside"
+            android:visibility="gone" />
     </LinearLayout>
 
     <TextView

@@ -43,6 +43,7 @@ public class ArtifactDetailFragment extends Fragment {
     private CommentAdapter commentAdapter;
     private List<Comment> commentsList = new ArrayList<>();
     private String currentUsername;
+    private boolean isCurrentUserAdmin = false;
 
     public static ArtifactDetailFragment newInstance(Artifact artifact) {
         ArtifactDetailFragment fragment = new ArtifactDetailFragment();
@@ -122,6 +123,7 @@ public class ArtifactDetailFragment extends Fragment {
             artifactId = artifact.getLotNumber();
             loadLikeData();
             setupLikeButton();
+            checkUserAdminRole();
             loadCommentsData();
             setupCommentButton();
         }
@@ -225,7 +227,8 @@ public class ArtifactDetailFragment extends Fragment {
 
     private void setupCommentsRecyclerView() {
         recyclerViewComments.setLayoutManager(new LinearLayoutManager(getContext()));
-        commentAdapter = new CommentAdapter(commentsList);
+        CommentAdapter.OnCommentDeleteListener deleteListener = commentId -> deleteComment(commentId);
+        commentAdapter = new CommentAdapter(commentsList, isCurrentUserAdmin, deleteListener);
         recyclerViewComments.setAdapter(commentAdapter);
     }
 
@@ -311,5 +314,42 @@ public class ArtifactDetailFragment extends Fragment {
             editTextCommentInput.setText("");
             Toast.makeText(getContext(), "Comment posted", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void checkUserAdminRole() {
+        if (currentUserId == null) {
+            isCurrentUserAdmin = false;
+            return;
+        }
+
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
+        usersRef.child(currentUserId).child("role").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String role = snapshot.getValue(String.class);
+                isCurrentUserAdmin = "admin".equals(role);
+                if (commentAdapter != null) {
+                    commentAdapter.setUserAdmin(isCurrentUserAdmin);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                isCurrentUserAdmin = false;
+            }
+        });
+    }
+
+    private void deleteComment(String commentId) {
+        if (artifactId == null) return;
+
+        DatabaseReference commentRef = artifactsRef.child(artifactId).child("comments").child(commentId);
+        commentRef.removeValue().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(getContext(), "Comment deleted", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), "Failed to delete comment", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
