@@ -17,21 +17,27 @@ import android.content.Intent;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+// Main activity that starts the application and manages fragments.
 public class MainActivity extends AppCompatActivity {
 
     FirebaseDatabase db;
 
+    // Initializes Firebase and displays the login page.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Connect the application to Firebase.
         db = FirebaseDatabase.getInstance("https://b07project-97f73-default-rtdb.firebaseio.com/");
         DatabaseReference myRef = db.getReference("testDemo");
 
-//        myRef.setValue("B07 Demo!");
+        // myRef.setValue("B07 Demo!");
+
+        // Add a test value to the Firebase database.
         myRef.child("movies").setValue("B07 Demo!");
 
+        // Only load login when the activity is first created.
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new LoginFragment())
@@ -39,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Replaces the current screen with another fragment.
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
@@ -46,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    // Return to the previous fragment when possible.
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {

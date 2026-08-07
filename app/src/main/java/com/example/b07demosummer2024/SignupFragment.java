@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+// Signup screen that communicates with the signup presenter.
 public class SignupFragment extends Fragment implements SignupContract.View {
 
     private EditText editTextSignupEmail;
@@ -20,6 +21,7 @@ public class SignupFragment extends Fragment implements SignupContract.View {
     private EditText editTextSignupPassword;
     private SignupContract.Presenter presenter;
 
+    // Creates and initializes the signup screen.
     @Nullable
     @Override
     public View onCreateView(
@@ -29,6 +31,7 @@ public class SignupFragment extends Fragment implements SignupContract.View {
 
         View view = inflater.inflate(R.layout.fragment_signup, container, false);
 
+        // Connect the signup fields to the layout.
         editTextSignupEmail = view.findViewById(R.id.editTextSignupEmail);
         editTextSignupUsername = view.findViewById(R.id.editTextSignupUsername);
         editTextSignupPassword = view.findViewById(R.id.editTextSignupPassword);
@@ -36,8 +39,10 @@ public class SignupFragment extends Fragment implements SignupContract.View {
         Button buttonSignup = view.findViewById(R.id.buttonSignup);
         Button buttonBackToLogin = view.findViewById(R.id.buttonBackToLogin);
 
+        // Create the presenter used for signup logic.
         presenter = new SignupPresenter(this, new SignupModel());
 
+        // Send entered account information to the presenter.
         buttonSignup.setOnClickListener(v -> {
             String email = editTextSignupEmail.getText().toString();
             String username = editTextSignupUsername.getText().toString();
@@ -46,6 +51,7 @@ public class SignupFragment extends Fragment implements SignupContract.View {
             presenter.signup(email, username, password);
         });
 
+        // Return to the login screen.
         buttonBackToLogin.setOnClickListener(v ->
                 getParentFragmentManager().popBackStack()
         );
@@ -53,21 +59,25 @@ public class SignupFragment extends Fragment implements SignupContract.View {
         return view;
     }
 
+    // Display an error on the email field.
     @Override
     public void showEmailError(String message) {
         editTextSignupEmail.setError(message);
     }
 
+    // Display an error on the username field.
     @Override
     public void showUsernameError(String message) {
         editTextSignupUsername.setError(message);
     }
 
+    // Display an error on the password field.
     @Override
     public void showPasswordError(String message) {
         editTextSignupPassword.setError(message);
     }
 
+    // Move the new user to the home screen.
     @Override
     public void showSignupSuccess() {
         Toast.makeText(
@@ -76,6 +86,7 @@ public class SignupFragment extends Fragment implements SignupContract.View {
                 Toast.LENGTH_SHORT
         ).show();
 
+        // Clear the previous login/signup screens.
         getParentFragmentManager().popBackStack(null, androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
         FragmentTransaction transaction =
@@ -85,6 +96,7 @@ public class SignupFragment extends Fragment implements SignupContract.View {
         transaction.commit();
     }
 
+    // Display an unsuccessful signup message.
     @Override
     public void showSignupError(String message) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show();

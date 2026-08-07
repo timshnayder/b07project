@@ -177,7 +177,7 @@ public class ArtifactDetailFragment extends Fragment {
             }
         });
     }
-
+    // the like button has to be logged in to like
     private void setupLikeButton() {
         if (currentUserId == null) {
             buttonLike.setEnabled(false);
@@ -187,7 +187,7 @@ public class ArtifactDetailFragment extends Fragment {
 
         buttonLike.setOnClickListener(v -> toggleLike());
     }
-
+    // counts the likes
     private void toggleLike() {
         if (artifactId == null || currentUserId == null || artifact == null) return;
 
@@ -207,7 +207,7 @@ public class ArtifactDetailFragment extends Fragment {
         updateLikeButton();
         artifactRef.child("likeCount").setValue(artifact.getLikeCount());
     }
-
+    // counts the total amount of likes on the artifact like a loop
     private void updateLikeCountDisplay() {
         if (textViewLikeCount != null && artifact != null) {
             long likeCount = artifact.getLikeCount();
@@ -215,7 +215,7 @@ public class ArtifactDetailFragment extends Fragment {
             textViewLikeCount.setText(likeText);
         }
     }
-
+    //red heart for liked, white heart for not liked or unliked
     private void updateLikeButton() {
         if (buttonLike == null) return;
 
@@ -229,11 +229,11 @@ public class ArtifactDetailFragment extends Fragment {
                     android.graphics.Color.parseColor("#999999")));
         }
     }
-
+    // Check whether this artifact is already saved by the user.
     private void loadSaveData() {
         if (artifactId == null || currentUserId == null) return;
 
-        DatabaseReference userSavedRef = FirebaseDatabase.getInstance()            
+        DatabaseReference userSavedRef = FirebaseDatabase.getInstance()
             .getReference("users")
             .child(currentUserId)
             .child("saved")
@@ -254,7 +254,7 @@ public class ArtifactDetailFragment extends Fragment {
             }
         });
     }
-
+    // Set up the save button for logged-in users.
     private void setupSaveButton() {
         if (buttonSave == null) return;
 
@@ -266,7 +266,7 @@ public class ArtifactDetailFragment extends Fragment {
 
         buttonSave.setOnClickListener(v -> toggleSave());
     }
-
+    // Save or remove the artifact from the user's saved collection.
     private void toggleSave() {
         if (artifactId == null || currentUserId == null || artifact == null) return;
 
@@ -291,6 +291,7 @@ public class ArtifactDetailFragment extends Fragment {
                 }
             });
         } else {
+            // Add the artifact to the user's saved artifacts.
             userSavedRef.setValue(true).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     userHasSaved = true;
@@ -306,7 +307,7 @@ public class ArtifactDetailFragment extends Fragment {
             });
         }
     }
-
+    // Update the save button based on whether the artifact is saved.
     private void updateSaveButton() {
         if (buttonSave == null) return;
 
@@ -327,7 +328,7 @@ public class ArtifactDetailFragment extends Fragment {
         commentAdapter = new CommentAdapter(commentsList, isCurrentUserAdmin, deleteListener);
         recyclerViewComments.setAdapter(commentAdapter);
     }
-
+    // Load all comments for this artifact from Firebase.
     private void loadCommentsData() {
         if (artifactId == null) return;
 
@@ -335,7 +336,7 @@ public class ArtifactDetailFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 commentsList.clear();
-
+                // Convert each Firebase entry into a Comment object.
                 for (DataSnapshot commentSnapshot : dataSnapshot.getChildren()) {
                     Comment comment = commentSnapshot.getValue(Comment.class);
                     if (comment != null) {
@@ -343,7 +344,7 @@ public class ArtifactDetailFragment extends Fragment {
                         commentsList.add(comment);
                     }
                 }
-
+                // Show newest comments first.
                 Collections.sort(commentsList, (c1, c2) -> Long.compare(c2.getTimestamp(), c1.getTimestamp()));
                 commentAdapter.notifyDataSetChanged();
             }
@@ -354,7 +355,7 @@ public class ArtifactDetailFragment extends Fragment {
             }
         });
     }
-
+    // Enable comment posting only when the user is logged in.
     private void setupCommentButton() {
         if (currentUserId == null) {
             editTextCommentInput.setEnabled(false);
@@ -362,7 +363,7 @@ public class ArtifactDetailFragment extends Fragment {
             editTextCommentInput.setHint("Login to comment");
             return;
         }
-
+        // Load the username before creating comments.
         getCurrentUsername();
         buttonPostComment.setOnClickListener(v -> postComment());
     }
@@ -395,7 +396,7 @@ public class ArtifactDetailFragment extends Fragment {
             Toast.makeText(getContext(), "Please login to comment", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        // Store the information needed for the comment.
         Comment newComment = new Comment();
         newComment.setUserId(currentUserId);
         newComment.setUsername(currentUsername);
@@ -403,6 +404,7 @@ public class ArtifactDetailFragment extends Fragment {
         newComment.setTimestamp(System.currentTimeMillis());
 
         DatabaseReference commentsRef = artifactsRef.child(artifactId).child("comments");
+        // Firebase generates a unique ID for each comment.
         String commentId = commentsRef.push().getKey();
 
         if (commentId != null) {
@@ -411,7 +413,7 @@ public class ArtifactDetailFragment extends Fragment {
             Toast.makeText(getContext(), "Comment posted", Toast.LENGTH_SHORT).show();
         }
     }
-
+    // Check whether the current user has admin privileges.
     private void checkUserAdminRole() {
         if (currentUserId == null) {
             isCurrentUserAdmin = false;
@@ -424,6 +426,7 @@ public class ArtifactDetailFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String role = snapshot.getValue(String.class);
                 isCurrentUserAdmin = "admin".equals(role);
+                // Update comment controls after admin status is known.
                 if (commentAdapter != null) {
                     commentAdapter.setUserAdmin(isCurrentUserAdmin);
                 }
@@ -435,7 +438,7 @@ public class ArtifactDetailFragment extends Fragment {
             }
         });
     }
-
+    // Remove the selected comment from Firebase.
     private void deleteComment(String commentId) {
         if (artifactId == null) return;
 
