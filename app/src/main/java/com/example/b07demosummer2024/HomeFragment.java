@@ -26,10 +26,8 @@ public class HomeFragment extends Fragment {
         Button buttonBrowseArtifacts = view.findViewById(R.id.buttonBrowseArtifacts);
         Button buttonSavedArtifacts = view.findViewById(R.id.buttonSavedArtifacts);
         Button buttonManageArtifacts = view.findViewById(R.id.buttonManageArtifacts);
-        Button buttonAddArtifact = view.findViewById(R.id.buttonAddArtifact);
         Button buttonLogout = view.findViewById(R.id.buttonLogout);
         buttonManageArtifacts.setVisibility(View.GONE);
-        buttonAddArtifact.setVisibility(View.GONE);
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -47,7 +45,6 @@ public class HomeFragment extends Fragment {
 
                     if ("admin".equals(role)) {
                         buttonManageArtifacts.setVisibility(View.VISIBLE);
-                        buttonAddArtifact.setVisibility(View.VISIBLE);
                     }
                 }
 
@@ -55,7 +52,6 @@ public class HomeFragment extends Fragment {
                 public void onCancelled(@NonNull DatabaseError error) {
                     // Keep admin buttons hidden if the role cannot be loaded.
                     buttonManageArtifacts.setVisibility(View.GONE);
-                    buttonAddArtifact.setVisibility(View.GONE);
                 }
             });
         }
@@ -78,13 +74,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 loadFragment(new ManageArtifactsFragment());
-            }
-        });
-
-        buttonAddArtifact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new AddArtifactFragment());
             }
         });
 

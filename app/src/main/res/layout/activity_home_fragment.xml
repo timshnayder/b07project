@@ -31,20 +31,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Manage Artifacts"
-        app:layout_constraintBottom_toTopOf="@+id/buttonAddArtifact"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSavedArtifacts" />
-
-    <Button
-        android:id="@+id/buttonAddArtifact"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Add New Artifact"
         app:layout_constraintBottom_toTopOf="@+id/buttonLogout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonManageArtifacts" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonSavedArtifacts" />
 
     <Button
         android:id="@+id/buttonLogout"
@@ -54,6 +44,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAddArtifact" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonManageArtifacts" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
