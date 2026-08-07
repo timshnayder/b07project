@@ -46,7 +46,7 @@ public class ArtifactDetailFragment extends Fragment {
     private List<Comment> commentsList = new ArrayList<>();
     private String currentUsername;
     private boolean isCurrentUserAdmin = false;
-
+    //new bundle that updates
     public static ArtifactDetailFragment newInstance(Artifact artifact) {
         ArtifactDetailFragment fragment = new ArtifactDetailFragment();
         Bundle args = new Bundle();
@@ -62,7 +62,7 @@ public class ArtifactDetailFragment extends Fragment {
             artifact = (Artifact) getArguments().getSerializable("artifact");
         }
     }
-
+    // on creation, it gives new one
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -142,7 +142,7 @@ public class ArtifactDetailFragment extends Fragment {
 
         return view;
     }
-
+    //set field
     private void setFieldText(TextView textView, String value) {
         if (textView == null) return;
         if (value != null && !value.trim().isEmpty()) {
@@ -151,7 +151,7 @@ public class ArtifactDetailFragment extends Fragment {
             textView.setText("N/A");
         }
     }
-
+    //loads data if null returns none
     private void loadLikeData() {
         if (artifactId == null || currentUserId == null) return;
 
