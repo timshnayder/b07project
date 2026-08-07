@@ -1,70 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <LinearLayout
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp">
+        android:padding="16dp">
 
         <TextView
+            android:id="@+id/textViewEditTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Edit Item"
+            android:text="Edit Artifact"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editTextEditId"
-            android:layout_width="match_parent"
+            android:id="@+id/editTextEditLotNumber"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Item ID" />
+            android:hint="Lot Number (Load only — cannot be edited)"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewEditTitle" />
 
         <Button
-            android:id="@+id/buttonLoadItem"
-            android:layout_width="match_parent"
+            android:id="@+id/buttonLoadArtifact"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Load Item" />
+            android:text="Load Artifact"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextEditLotNumber" />
 
         <EditText
-            android:id="@+id/editTextEditTitle"
-            android:layout_width="match_parent"
+            android:id="@+id/editTextEditName"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Title" />
-
-        <EditText
-            android:id="@+id/editTextEditAuthor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Author" />
-
-        <EditText
-            android:id="@+id/editTextEditGenre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Genre" />
+            android:hint="Name (Mandatory)"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonLoadArtifact" />
 
         <EditText
             android:id="@+id/editTextEditDescription"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Description"
+            android:hint="Description (Mandatory)"
             android:inputType="textMultiLine"
-            android:minLines="3" />
+            android:minLines="3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextEditName" />
+
+        <TextView
+            android:id="@+id/textViewEditCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Category:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextEditDescription" />
+
+        <Spinner
+            android:id="@+id/spinnerEditCategory"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewEditCategory" />
+
+        <TextView
+            android:id="@+id/textViewEditMaterial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Material:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinnerEditCategory" />
+
+        <Spinner
+            android:id="@+id/spinnerEditMaterial"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewEditMaterial" />
+
+        <TextView
+            android:id="@+id/textViewEditDynasty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Dynasty / Period:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinnerEditMaterial" />
+
+        <Spinner
+            android:id="@+id/spinnerEditDynastyPeriod"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewEditDynasty" />
+
+        <EditText
+            android:id="@+id/editTextEditCulturalOrigin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Cultural Origin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinnerEditDynastyPeriod" />
+
+        <EditText
+            android:id="@+id/editTextEditDimensions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Dimensions"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextEditCulturalOrigin" />
+
+        <EditText
+            android:id="@+id/editTextEditConditionReport"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Condition Report"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextEditDimensions" />
+
+        <EditText
+            android:id="@+id/editTextEditCurrentLocation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Current Location"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextEditConditionReport" />
+
+        <EditText
+            android:id="@+id/editTextEditAcquisitionMethod"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Acquisition Method"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextEditCurrentLocation" />
+
+        <EditText
+            android:id="@+id/editTextEditProvenance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Provenance"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextEditAcquisitionMethod" />
+
+        <EditText
+            android:id="@+id/editTextEditAccessionNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Accession Number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextEditProvenance" />
+
+        <EditText
+            android:id="@+id/editTextEditNotes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Notes"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextEditAccessionNumber" />
 
         <Button
-            android:id="@+id/buttonUpdateItem"
-            android:layout_width="match_parent"
+            android:id="@+id/buttonSelectEditImage"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Update Item" />
+            android:text="Select Replacement Image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextEditNotes" />
+
+        <ImageView
+            android:id="@+id/imageViewEditPreview"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonSelectEditImage" />
+
+        <Button
+            android:id="@+id/buttonUpdateArtifact"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Update Artifact"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageViewEditPreview" />
 
         <Button
             android:id="@+id/buttonEditBack"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Back" />
+            android:text="Back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonUpdateArtifact"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
