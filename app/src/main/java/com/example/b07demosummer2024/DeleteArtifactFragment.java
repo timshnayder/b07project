@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+// Fragment used to delete artifacts using their lot number.
 public class DeleteArtifactFragment extends Fragment {
     private EditText editTextLotNumber;
     private Button buttonDelete;
@@ -27,18 +28,22 @@ public class DeleteArtifactFragment extends Fragment {
     private FirebaseDatabase db;
     private DatabaseReference artifactsRef;
 
+    // Creates the delete artifact screen.
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_delete_artifact, container, false);
 
+        // Connect the buttons and input field to the layout.
         editTextLotNumber = view.findViewById(R.id.editTextLotNumber);
         buttonDelete = view.findViewById(R.id.buttonDelete);
         buttonBack = view.findViewById(R.id.buttonBack);
 
+        // Connect to the artifacts section of Firebase.
         db = FirebaseDatabase.getInstance("https://b07project-97f73-default-rtdb.firebaseio.com/");
         artifactsRef = db.getReference("artifacts");
 
+        // Check the lot number before attempting deletion.
         buttonDelete.setOnClickListener(v -> {
             String lotNumber = editTextLotNumber.getText().toString().trim();
 
@@ -47,6 +52,7 @@ public class DeleteArtifactFragment extends Fragment {
                 return;
             }
 
+            // Ask the user to confirm before deleting the artifact.
             new AlertDialog.Builder(requireContext())
                     .setTitle("Delete Artifact")
                     .setMessage("Are you sure you want to delete artifact " + lotNumber + "?")
@@ -54,25 +60,34 @@ public class DeleteArtifactFragment extends Fragment {
                     .setNegativeButton("Cancel", null)
                     .show();
         });
+
+        // Return to the previous screen.
         buttonBack.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
         return view;
     }
 
+    // Finds and deletes an artifact using its lot number.
     private void deleteByLotNumber() {
         String lotNumber = editTextLotNumber.getText().toString().trim();
+
         if (lotNumber.isEmpty()) {
             editTextLotNumber.setError("Lot Number is required");
             return;
         }
 
+        // Prevent duplicate clicks while Firebase is working.
         buttonDelete.setEnabled(false);
+
         artifactsRef.child(lotNumber).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                // Delete the artifact if the lot number exists.
                 if (snapshot.exists()) {
                     snapshot.getRef().removeValue().addOnCompleteListener(task -> {
                         buttonDelete.setEnabled(true);
+
                         if (task.isSuccessful()) {
                             Toast.makeText(getContext(), "Artifact deleted successfully", Toast.LENGTH_SHORT).show();
                             editTextLotNumber.setText("");
@@ -86,6 +101,7 @@ public class DeleteArtifactFragment extends Fragment {
                 }
             }
 
+            // Handle Firebase database errors.
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 buttonDelete.setEnabled(true);
