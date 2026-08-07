@@ -29,6 +29,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Fragment that displays a list of artifacts fetched from a Firebase Database.
+ * It supports searching and pagination.
+ */
 public class BrowseArtifactsFragment extends Fragment {
     private List<Artifact> artifactList;
     private RecyclerView recyclerView;
@@ -38,55 +42,67 @@ public class BrowseArtifactsFragment extends Fragment {
     private Button buttonPrev;
     private Button buttonNext;
     private TextView textViewPageInfo;
-
+ 
     private FirebaseDatabase db;
     private DatabaseReference itemsRef;
-
+ 
+    //Current pagination limit (-1 for All, 12, 24)
     private int curLimit = -1;
     private String curQuery = "";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.browse_artifacts_fragment, container, false);
-
+ 
         artifactList = new ArrayList<>();
         artifactAdapter = new ArtifactAdapter(artifactList, artifact -> loadDetailFragment(artifact));
-
+ 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(artifactAdapter);
-
+ 
         spinnerPagination = view.findViewById(R.id.spinnerPagination);
         setupSpinner();
-
+ 
         searchView = view.findViewById(R.id.searchView);
         setupSearchView();
-
+ 
         buttonPrev = view.findViewById(R.id.buttonPrev);
         buttonNext = view.findViewById(R.id.buttonNext);
         setupButtons();
-
+ 
         textViewPageInfo = view.findViewById(R.id.textViewPageInfo);
-
+ 
         db = FirebaseDatabase.getInstance("https://b07project-97f73-default-rtdb.firebaseio.com/");
         fetchArtifactsFromDatabase();
-
+ 
         return view;
     }
 
+    /**
+     * Replaces the current fragment in the fragment container and adds the transaction to the back stack.
+     *
+     * @param artifact The artifact whose details should be displayed.
+     */
     private void loadDetailFragment(Artifact artifact) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, ArtifactDetailFragment.newInstance(artifact));
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
+ 
+    /**
+     * Updates the page information text indicator with the current page and total page count.
+     */
     private void updatePageInfo() {
         if (textViewPageInfo != null && artifactAdapter != null) {
             textViewPageInfo.setText("Page " + (artifactAdapter.getCurPage() + 1) + " of " + artifactAdapter.getTotalPages());
         }
     }
 
+    /**
+     * Sets up click listeners for the pagination navigation buttons (previous and next).
+     */
     private void setupButtons(){
         buttonPrev.setOnClickListener(v -> {
             if(artifactAdapter.getCurPage() > 0){
@@ -102,15 +118,20 @@ public class BrowseArtifactsFragment extends Fragment {
         });
     }
 
+    /**
+     * Configures the Spinner pagination menu, loads the saved limit preference from SharedPreferences,
+     * and sets up selection listeners to filter list.
+     */
     private void setupSpinner(){
         String[] options = {"All", "12", "24"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, options);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPagination.setAdapter(adapter);
-
+ 
         SharedPreferences sharedPref = requireActivity().getSharedPreferences("app_settings", Context.MODE_PRIVATE);
         curLimit = sharedPref.getInt("PAGE_LIMIT", -1);
-
+ 
+        //sync Spinner state with curLimit preference
         //-1 = All
         if(curLimit == -1){
             spinnerPagination.setSelection(0);
@@ -119,7 +140,7 @@ public class BrowseArtifactsFragment extends Fragment {
         }else{
             spinnerPagination.setSelection(2);
         }
-
+ 
         spinnerPagination.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -130,18 +151,22 @@ public class BrowseArtifactsFragment extends Fragment {
                 }else{
                     curLimit = 24;
                 }
+                //save chosen page limit to SharedPreferences
                 sharedPref.edit().putInt("PAGE_LIMIT", curLimit).apply();
                 artifactAdapter.filter(curQuery, curLimit);
                 updatePageInfo();
             }
-
+ 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
+ 
             }
         });
     }
 
+    /**
+     * Initializes the SearchView query listener to filter adapter artifacts on text changes or submit.
+     */
     private void setupSearchView(){
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -161,6 +186,10 @@ public class BrowseArtifactsFragment extends Fragment {
         });
     }
 
+    /**
+     * Fetches the full list of artifacts from the Firebase Database.
+     * Listen for updates in the artifacts node, populates artifactList, and updates the adapter and page info.
+     */
     private void fetchArtifactsFromDatabase() {
         itemsRef = db.getReference("artifacts");
         itemsRef.addValueEventListener(new ValueEventListener() {
@@ -173,10 +202,11 @@ public class BrowseArtifactsFragment extends Fragment {
                         loadedArtifacts.add(artifact);
                     }
                 }
+                //send retrieved list into the adapter
                 artifactAdapter.updateArtifacts(loadedArtifacts);
                 updatePageInfo();
             }
-
+ 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Handle possible errors

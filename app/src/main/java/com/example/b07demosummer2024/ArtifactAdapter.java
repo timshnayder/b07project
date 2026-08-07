@@ -13,20 +13,46 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Adapter class for binding a list of {@link Artifact} objects to a RecyclerView.
+ * This adapter handles local filtering (searching) and pagination logic.
+ */
 public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ArtifactViewHolder> {
+    // List of artifacts currently displayed on the current page
     private List<Artifact> artifactList;
+    // Complete list of all artifacts fetched from the database
     private List<Artifact> fullList;
+    // List of artifacts matching the search query, before pagination limits are applied
     private List<Artifact> filteredList;
+    // Total number of pages available based on the filtered list and pagination limit
     private int totalPages = 0;
+    // Current active page index (0-indexed)
     private int curPage = 0;
+    // Maximum number of items per page. -1 indicates no limit (show all)
     private int curLimit = -1;
+    // The query text currently used to filter artifacts
     private String curQuery = "";
+    // Callback listener for handling clicks on artifact items
     private OnArtifactClickListener clickListener;
 
+    /**
+     * Interface definition for a callback to be invoked when an artifact is clicked.
+     */
     public interface OnArtifactClickListener {
+        /**
+         * Called when an artifact item has been clicked.
+         *
+         * @param artifact The artifact that was clicked.
+         */
         void onArtifactClick(Artifact artifact);
     }
 
+    /**
+     * Constructs a new ArtifactAdapter.
+     *
+     * @param artifactList The initial list of artifacts to display.
+     * @param clickListener The listener for artifact click events.
+     */
     public ArtifactAdapter(List<Artifact> artifactList, OnArtifactClickListener clickListener) {
         this.artifactList = new ArrayList<>(artifactList);
         this.fullList = new ArrayList<>(artifactList);
@@ -34,6 +60,11 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
         this.clickListener = clickListener;
     }
 
+    /**
+     * Updates the full list of artifacts and reapplies the current filter and limit.
+     *
+     * @param newArtifacts The new list of artifacts.
+     */
     public void updateArtifacts(List<Artifact> newArtifacts){
         this.fullList = new ArrayList<>(newArtifacts);
         filter(curQuery, curLimit);
@@ -42,24 +73,27 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
     @NonNull
     @Override
     public ArtifactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Inflate individual artifact item layout
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_artifact_adapter, parent, false);
         return new ArtifactViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ArtifactViewHolder holder, int position) {
+        // Retrieve artifact for the current position
         Artifact artifact = artifactList.get(position);
         holder.textViewName.setText(artifact.getName());
         String categoryAndPeriod = artifact.getCategory() + " | " + artifact.getDynastyPeriod();
         holder.textViewCategoryAndPeriod.setText(categoryAndPeriod);
         holder.textViewDescription.setText(artifact.getDescription());
-
-        //load image
+ 
+        // Load artifact image from URL, using a default gallery placeholder if loading
         Glide.with(holder.itemView.getContext())
                 .load(artifact.getImageUrl())
                 .placeholder(android.R.drawable.ic_menu_gallery)
                 .into(holder.imageViewArtifact);
-
+ 
+        // Set item click listener to trigger the callback
         holder.itemView.setOnClickListener(v -> {
             if (clickListener != null) {
                 clickListener.onArtifactClick(artifact);
@@ -127,11 +161,19 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
         notifyDataSetChanged();
     }
 
-    //individual short artifact description
+    /**
+     * ViewHolder class that caches child views for a single artifact list item
+     * to avoid repeated findViewById lookups.
+     */
     public static class ArtifactViewHolder extends RecyclerView.ViewHolder {
         TextView textViewName, textViewCategoryAndPeriod, textViewDescription;
         ImageView imageViewArtifact;
-
+ 
+        /**
+         * Constructs a new ArtifactViewHolder and binds the UI elements.
+         *
+         * @param itemView The parent view of the artifact item.
+         */
         public ArtifactViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewName = itemView.findViewById(R.id.textViewName);
@@ -140,9 +182,20 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.Artifa
             imageViewArtifact = itemView.findViewById(R.id.imageViewArtifact);
         }
     }
+    /**
+     * Gets the total number of pages based on current filters and page limit.
+     *
+     * @return The total number of pages.
+     */
     public int getTotalPages(){
         return totalPages;
     }
+
+    /**
+     * Gets the current active page index (0-indexed).
+     *
+     * @return The current page number.
+     */
     public int getCurPage(){
         return curPage;
     }
